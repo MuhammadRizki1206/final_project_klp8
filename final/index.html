@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TechMarket | Premium Tech Store</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="hero-badge">
+            <i class="fa-solid fa-bolt"></i>
+            Premium Tech Marketplace
+        </div>
+
+        <h1>TechMarket</h1>
+
+        <p>
+            Temukan gadget, aksesoris gaming, dan perangkat teknologi terbaik
+            dengan kualitas premium dan harga terpercaya.
+        </p>
+
+        <div class="search-container">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Cari produk favorit Anda..."
+                    autocomplete="off">
+
+            </div>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div class="stat-card">
+                <h3>500+</h3>
+                <span>Produk</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>1.200+</h3>
+                <span>Pelanggan</span>
+            </div>
+
+            <div class="stat-card">
+                <h3>4.9★</h3>
+                <span>Rating</span>
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <!-- Produk -->
+
+        <section class="products-container">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Katalog Produk</h2>
+                    <p>Pilih produk teknologi terbaik sesuai kebutuhan Anda.</p>
+                </div>
+
+            </div>
+
+            <div id="products-grid" class="products-grid">
+                <!-- Produk akan dibuat melalui JavaScript -->
+            </div>
+
+        </section>
+
+        <!-- Cart -->
+
+        <aside class="cart-container">
+
+            <div class="cart-header">
+
+                <div>
+                    <h2>Keranjang</h2>
+                    <p>Ringkasan pesanan Anda</p>
+                </div>
+
+                <div class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+
+            </div>
+
+            <div id="cart-items" class="cart-items">
+
+                <p class="empty-cart">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <br><br>
+
+                    Belum ada produk di keranjang.
+
+                </p>
+
+            </div>
+
+            <div class="cart-summary">
+
+                <div class="summary-row">
+                    <span>Total</span>
+                    <strong id="cart-total">Rp 0</strong>
+                </div>
+
+                <button id="checkout-btn">
+
+                    <i class="fa-solid fa-credit-card"></i>
+
+                    Checkout Sekarang
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- Toast -->
+
+    <div id="toast-container" class="toast-container"></div>
+
+   <!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h2>TechMarket</h2>
+
+            <p>
+                Marketplace teknologi modern yang menyediakan gadget,
+                aksesoris gaming, dan perangkat elektronik berkualitas
+                dengan harga terbaik.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <div class="footer-column">
+                <h4>Perusahaan</h4>
+
+                <a href="#">Tentang Kami</a>
+                <a href="#">Karier</a>
+                <a href="#">Blog</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Layanan</h4>
+
+                <a href="#">Semua Produk</a>
+                <a href="#">Promo</a>
+                <a href="#">Bantuan</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Kontak</h4>
+
+                <a href="#">support@techmarket.id</a>
+                <a href="#">+62 812-3456-7890</a>
+                <a href="#">Makassar, Indonesia</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 <strong>TechMarket</strong>. All Rights Reserved.
+        </p>
+
+        <div class="footer-social">
+
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+            <a href="#"><i class="fab fa-instagram"></i></a>
+
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+
+            <a href="#"><i class="fab fa-github"></i></a>
+
+        </div>
+
+    </div>
+
+</footer>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
