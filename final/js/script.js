@@ -22,7 +22,9 @@ const cartItemsContainer = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 const searchInput = document.getElementById("search-input");
 const checkoutBtn = document.getElementById("checkout-btn");
-const toastContainer = document.getElementById("toast-container"); // Tambahkan baris ini
+const toastContainer = document.getElementById("toast-container");
+const cartBadge = document.getElementById("cart-badge");
+const cartManifestNo = document.getElementById("cart-manifest-no");
 
 // ==========================================
 // Fitur Tambahan: Notifikasi ala Sonner (Manipulasi DOM)
@@ -30,9 +32,9 @@ const toastContainer = document.getElementById("toast-container"); // Tambahkan 
 function showToast(message, type = "success") {
 
     const icons = {
-        success: "✅",
-        error: "❌",
-        info: "ℹ️"
+        success: "fa-check",
+        error: "fa-xmark",
+        info: "fa-circle-info"
     };
 
     const toast = document.createElement("div");
@@ -40,23 +42,35 @@ function showToast(message, type = "success") {
     toast.className = `toast ${type}`;
 
     toast.innerHTML = `
-        <span>${icons[type]}</span>
-        <span>${message}</span>
+        <span class="toast-icon"><i class="fa-solid ${icons[type]}"></i></span>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" aria-label="Tutup notifikasi"><i class="fa-solid fa-xmark"></i></button>
+        <span class="toast-progress"></span>
     `;
 
     toastContainer.appendChild(toast);
 
-    setTimeout(() => {
-
+    const dismiss = () => {
         toast.classList.add("hide");
+        toast.addEventListener("animationend", () => toast.remove(), { once: true });
+    };
 
-        toast.addEventListener("animationend", () => {
-            toast.remove();
-        });
+    const timer = setTimeout(dismiss, 3000);
 
-    },3000);
+    toast.querySelector(".toast-close").addEventListener("click", () => {
+        clearTimeout(timer);
+        dismiss();
+    });
 
 }
+
+// ==========================================
+// Fungsi Bantuan: Format Kode SKU (SKU-001, SKU-002, dst)
+// ==========================================
+function formatSku(id) {
+    return `SKU-${String(id).padStart(3, "0")}`;
+}
+
 // ==========================================
 // 3. Fungsi Menampilkan Produk (Menggunakan LOOP)
 // ==========================================
@@ -69,7 +83,14 @@ function displayProducts(productsToDisplay) {
         productCard.className = "product-card";
         
         productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
+            <div class="card-media">
+                <img src="${product.image}" alt="${product.name}">
+                <span class="sku-tag">${formatSku(product.id)}</span>
+                <span class="corner corner-tl"></span>
+                <span class="corner corner-tr"></span>
+                <span class="corner corner-bl"></span>
+                <span class="corner corner-br"></span>
+            </div>
             <h3>${product.name}</h3>
             <p class="price">Rp ${product.price.toLocaleString('id-ID')}</p>
             <button onclick="addToCart(${product.id})">Tambah ke Keranjang</button>
@@ -116,11 +137,38 @@ window.removeFromCart = function(productId) {
 };
 
 // ==========================================
+// 5b. Fungsi Kontrol Quantity (+/-) di Keranjang
+// ==========================================
+window.increaseQty = function(productId) {
+    const item = cart.find(item => item.id === productId);
+    if (!item) return;
+
+    item.quantity += 1;
+    updateCart();
+};
+
+window.decreaseQty = function(productId) {
+    const item = cart.find(item => item.id === productId);
+    if (!item) return;
+
+    item.quantity -= 1;
+
+    // Kalau quantity habis, hapus otomatis dari keranjang
+    if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== productId);
+        showToast(`${item.name} dihapus dari keranjang.`, 'info');
+    }
+
+    updateCart();
+};
+
+// ==========================================
 // 6. Fungsi Kalkulasi Total & Pembaruan DOM Keranjang (LOOPING)
 // ==========================================
 function updateCart() {
     cartItemsContainer.innerHTML = ""; // Kosongkan tampilan lama
     let totalHarga = 0;
+    let totalItem = 0; // Akumulasi total quantity untuk badge
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart">Keranjang masih kosong.</p>';
@@ -129,17 +177,23 @@ function updateCart() {
         cart.forEach(item => {
             const subTotal = item.price * item.quantity;
             totalHarga += subTotal; // Akumulasi total harga simulation
+            totalItem += item.quantity; // Akumulasi total quantity
 
             const itemElement = document.createElement("div");
             itemElement.className = "cart-item";
             itemElement.innerHTML = `
-                <div>
-                    <strong>${item.name}</strong><br>
-                    <small>${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}</small>
+                <div class="cart-item-info">
+                    <strong>${item.name}</strong>
+                    <span class="cart-item-price">${formatSku(item.id)} · Rp ${item.price.toLocaleString('id-ID')}/item</span>
                 </div>
-                <div style="text-align: right;">
-                    <span style="display:block; margin-bottom:4px; font-weight:600;">Rp ${subTotal.toLocaleString('id-ID')}</span>
-                    <button onclick="removeFromCart(${item.id})">Hapus</button>
+                <div class="cart-item-actions">
+                    <span class="cart-item-subtotal">Rp ${subTotal.toLocaleString('id-ID')}</span>
+                    <div class="qty-control">
+                        <button onclick="decreaseQty(${item.id})" aria-label="Kurangi jumlah">−</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="increaseQty(${item.id})" aria-label="Tambah jumlah">+</button>
+                    </div>
+                    <button class="remove-item-btn" onclick="removeFromCart(${item.id})">Hapus</button>
                 </div>
             `;
             cartItemsContainer.appendChild(itemElement);
@@ -148,6 +202,29 @@ function updateCart() {
 
     // Manipulasi DOM untuk mengubah teks total harga
     cartTotal.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+
+    // Update badge jumlah item di ikon keranjang
+    updateCartBadge(totalItem);
+}
+
+// ==========================================
+// 6b. Fungsi Update Badge Jumlah Item di Cart Icon
+// ==========================================
+function updateCartBadge(totalItem) {
+    if (totalItem > 0) {
+        cartBadge.textContent = totalItem > 99 ? "99+" : totalItem;
+        cartBadge.classList.remove("hidden");
+    } else {
+        cartBadge.classList.add("hidden");
+    }
+}
+
+// ==========================================
+// 6c. Fungsi Nomor Manifest (Kode Sesi Keranjang)
+// ==========================================
+function generateManifestNo() {
+    const random = Math.floor(1000 + Math.random() * 9000);
+    cartManifestNo.textContent = `MANIFEST NO. ${random}`;
 }
 
 // ==========================================
@@ -176,8 +253,10 @@ checkoutBtn.addEventListener("click", () => {
         showToast("Checkout berhasil! Pesanan diproses.", "success");
         cart = []; 
         updateCart();
+        generateManifestNo();
     }
 });
 
-// Menampilkan semua produk untuk pertama kali saat halaman dibuka
+// Menampilkan semua produk & nomor manifest untuk pertama kali saat halaman dibuka
 displayProducts(products);
+generateManifestNo();

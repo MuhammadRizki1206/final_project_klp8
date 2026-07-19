@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TechMarket | Premium Tech Store</title>
+    <title>TechMarket | Katalog Komponen</title>
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="stylesheet"
@@ -21,18 +21,22 @@
 
 <body>
 
+    <!-- ================= STATUS BAR ================= -->
+
+    <div class="status-bar">
+        <span class="status-dot"></span>
+        Semua sistem operasional &nbsp;·&nbsp; Pengiriman seluruh Indonesia 1–3 hari
+    </div>
+
     <!-- ================= HEADER ================= -->
 
     <header>
 
-        <div class="hero-badge">
-            <i class="fa-solid fa-bolt"></i>
-            Premium Tech Marketplace
-        </div>
+        <p class="hero-eyebrow">TECHMARKET // KATALOG KOMPONEN</p>
 
-        <h1>TechMarket</h1>
+        <h1>Rakit setup impianmu.</h1>
 
-        <p>
+        <p class="hero-desc">
             Temukan gadget, aksesoris gaming, dan perangkat teknologi terbaik
             dengan kualitas premium dan harga terpercaya.
         </p>
@@ -53,24 +57,7 @@
 
         </div>
 
-        <div class="hero-stats">
-
-            <div class="stat-card">
-                <h3>500+</h3>
-                <span>Produk</span>
-            </div>
-
-            <div class="stat-card">
-                <h3>1.200+</h3>
-                <span>Pelanggan</span>
-            </div>
-
-            <div class="stat-card">
-                <h3>4.9★</h3>
-                <span>Rating</span>
-            </div>
-
-        </div>
+        <p class="hero-credentials">500+ komponen terverifikasi &nbsp;·&nbsp; 1.200+ pelanggan &nbsp;·&nbsp; Rating 4.9/5</p>
 
     </header>
 
@@ -104,12 +91,15 @@
             <div class="cart-header">
 
                 <div>
-                    <h2>Keranjang</h2>
-                    <p>Ringkasan pesanan Anda</p>
+                    <h2>Keranjang Belanja</h2>
+                    <p id="cart-manifest-no" class="cart-manifest-no">MANIFEST NO. ----</p>
                 </div>
 
-                <div class="cart-icon">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                <div class="cart-icon-wrapper">
+                    <div class="cart-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <span id="cart-badge" class="cart-badge hidden">0</span>
                 </div>
 
             </div>
