@@ -53,6 +53,10 @@
                     placeholder="Cari produk favorit Anda..."
                     autocomplete="off">
 
+                <button type="button" id="palette-trigger" class="palette-trigger" aria-label="Buka pencarian cepat">
+                    <kbd>⌘</kbd><kbd>K</kbd>
+                </button>
+
             </div>
 
         </div>
@@ -78,8 +82,24 @@
 
             </div>
 
+            <p id="products-empty-state" class="products-empty-state hidden">Produk tidak ditemukan.</p>
+
             <div id="products-grid" class="products-grid">
                 <!-- Produk akan dibuat melalui JavaScript -->
+            </div>
+
+            <div id="pagination" class="pagination">
+                <button id="pagination-prev" class="pagination-nav" aria-label="Halaman sebelumnya">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <div id="pagination-pages" class="pagination-pages">
+                    <!-- Nomor halaman dibuat melalui JavaScript -->
+                </div>
+
+                <button id="pagination-next" class="pagination-nav" aria-label="Halaman berikutnya">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
 
         </section>
@@ -91,7 +111,7 @@
             <div class="cart-header">
 
                 <div>
-                    <h2>Keranjang Belanja</h2>
+                    <h2>Manifest Belanja</h2>
                     <p id="cart-manifest-no" class="cart-manifest-no">MANIFEST NO. ----</p>
                 </div>
 
@@ -211,6 +231,36 @@
     </div>
 
 </footer>
+    <!-- ================= COMMAND PALETTE ================= -->
+
+    <div id="palette-overlay" class="palette-overlay hidden">
+
+        <div class="palette-modal" role="dialog" aria-modal="true" aria-label="Pencarian cepat">
+
+            <div class="palette-input-row">
+                <i class="fa-solid fa-terminal"></i>
+                <input
+                    type="text"
+                    id="palette-input"
+                    placeholder="Cari komponen, SKU, atau kata kunci..."
+                    autocomplete="off">
+                <kbd class="palette-esc">ESC</kbd>
+            </div>
+
+            <div id="palette-results" class="palette-results">
+                <!-- Hasil pencarian dirender oleh JavaScript -->
+            </div>
+
+            <div class="palette-footer">
+                <span><kbd>↑</kbd><kbd>↓</kbd> navigasi</span>
+                <span><kbd>↵</kbd> tambah ke keranjang</span>
+                <span><kbd>ESC</kbd> tutup</span>
+            </div>
+
+        </div>
+
+    </div>
+
     <script src="js/script.js"></script>
 
 </body>
